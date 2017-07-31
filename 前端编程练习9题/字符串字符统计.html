@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	function count(str) {
+		var result = {};
+		for (var i = 0; i < str.length; i++) {
+			if (str[i] != ' ') {
+				if (result[str[i]]) {
+					result[str[i]] = result[str[i]] + 1;
+				}
+				else{
+					result[str[i]] = 1;
+				}
+			}
+			
+		}
+		return result;
+	}
+
+
+
+
+function count(str) {
+    var obj = {};
+    str.replace(/\S/g,function(s){
+        !obj[s]?obj[s]=1:obj[s]++;
+    })
+    return obj;
+}
+
+	console.log(count('hello world'));
+</script>
+</html>

@@ -1,0 +1,105 @@
+#include<cstdio>
+#include<iostream>
+#include<iterator>
+#include<vector>
+#include<string>
+#include<string.h>
+#include<map>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+const int N=1e5+5;
+
+typedef long long lld;
+
+map<string, vector<string> > father;
+
+set<string>vis;
+
+bool isfind=false;
+void dfs(string &a, string &b)
+{
+    if(isfind==true)return;
+
+    int l=father[a].size();
+
+    for(int i=0;i<l;++i)
+    {
+        string x = father[a][i];
+        if(b==x)
+        {
+            isfind=true;
+            return;
+        }
+        if(vis.count(x))continue;
+        vis.insert(x);
+
+        dfs(x, b);
+    }
+}
+
+void solve()
+{
+    int n, m;
+    cin>>n;
+
+    string a, b;
+    for(int i=0;i<n;++i)
+    {
+        cin>>a>>b;
+        father[a].push_back(b);
+    }
+
+    cin>>a>>b;
+    isfind = false;
+    vis.clear();
+    dfs(a, b);
+    bool atob = isfind;
+
+    isfind = false;
+    vis.clear();
+    dfs(b, a);
+    bool btoa = isfind;
+
+    if(atob && btoa)
+    {
+        puts("T");
+    }
+    else puts("F");
+}
+
+int main() {
+    solve();
+	return 0;
+}
+
+
+/*
+
+3
+A B
+B C
+C A
+A B
+
+
+3
+A B
+B C
+C D
+A C
+
+1
+A B
+A A
+
+5
+A B
+A C
+B D
+D B
+B E
+D B
+
+*/

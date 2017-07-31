@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+/**
+ * Created by dean on 2017/7/6.
+ */
+public class Main {
+    public static void main(String[] args) {
+        StringBuilder res = new StringBuilder();
+        char[] chs = new char[]{'F','G','R','S','T','L','M','N','O','P','Q','W','X','Y','Z','U','A','G','H','I','J','K','B','C','D','E','l','m','n','o','p','i','j','k','f','g','h','a','b','c','d','e','q','r','w','x','y','z','s','t','u','v'};
+
+        Scanner scan = new Scanner(System.in);
+        String s = scan.next();
+        String[] strs = s.split("#");
+
+        for (int i = 0;i < strs.length;++i) {
+            String str = strs[i];
+            int num = getNumByStr(str);
+            if (num < 0 || num > 51) {
+                System.out.println("ERROR");
+                return;
+            }
+            res.append(chs[num]);
+        }
+        System.out.println(res.toString());
+    }
+    private static int getNumByStr(String str) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0;i < str.length();++i) {
+            if (str.charAt(i) == '-') {
+                sb.append(0);
+            } else if (str.charAt(i) == '.') {
+                sb.append(1);
+            }
+        }
+        return Integer.parseInt(sb.toString(), 2);
+    }
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="underscore.js"></script>
+<script type="text/javascript">
+// 牛客编程通过代码
+	/*Array.prototype.uniq = function(){
+		var result = [];
+		flag = true;
+		for (i in this) {
+			if (this.hasOwnProperty(i)) {
+				if (result.indexOf(this[i]) < 0) {
+					if (this[i] != this[i]) {  //排除NaN，这里可以不用加上typeof this[i] == 'number'
+						if (flag == true) {
+							result.push(this[i]);
+							flag = false;
+						}
+						else{
+							continue;
+						}
+					}
+					else{
+						result.push(this[i]);
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+
+	console.log([false, true, undefined, null, NaN, 0, 1, {}, {}, 'a', 'a', NaN].uniq());*/
+
+
+
+
+
+// 下面进行整理各种方法
+// 一、复杂度为O(n^2)
+// 方法一：两层遍历
+/*Array.prototype.uniq = function(){
+	var res = [];
+	var flag = true;//用来判断NaN
+
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] != this[i]) {   //这个if用于判断NaN
+			if (flag == true) {
+				flag = false;
+			}
+			else{
+				continue;
+			}
+		}	
+		for (var j = 0; j < res.length; j++) {
+			if (this[i] === res[j]) {
+				break;
+			}
+		}
+		if (j == res.length) {
+			res.push(this[i]);
+		}
+	}
+	return res;
+}
+*/
+
+// 方法二：indexOf
+/*Array.prototype.uniq = function(){
+	var res = [];
+	var flag = true;
+
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] != this[i]) {
+			if (flag == true) {
+				flag = false;
+			}
+			else{
+				continue;
+			}
+		}
+		if (res.indexOf(this[i]) < 0) {  //这里的复杂度为O(n)
+			res.push(this[i])
+		}
+	}
+	return res;
+}
+*/
+
+// 方法三：filter
+/*Array.prototype.uniq = function(){
+	var flag1 = true;
+	var flag2 = true;
+	var res = this.filter(function(item, index, array){
+		if (flag2 == false) {
+			flag1 = false;
+		}
+		if (item != item) {
+			flag2 = false;
+		}
+		// 前面这些都是为了判断NaN
+		return array.indexOf(item) == index ||(item != item && flag1 == true);
+	});
+	return res;
+}
+*/
+
+
+
+// 二、O(nlogn)
+// 方法四：sort排序
+// 这种方法，比较适合于纯数字，因为'1'和1会被认为是一样的。
+/*Array.prototype.uniq = function(){
+	var res = this.sort().filter(function(item, index, array){
+		return item != array[index - 1];
+	});
+	return res;
+}
+*/
+
+
+// 三、O(n)  用空间换时间
+// 方法五：用哈希表
+// 这种方法有两个问题，一个是由于key值都是string，所以跟上面一样，无法区分1和'1'；另一个问题是对于对象，即使值相等，但指向不同，应该不算重复
+/*Array.prototype.uniq = function(){
+	var hash = {};
+	var res = [];
+	for (var i = 0; i < this.length; i++) {
+		if (!hash[this[i]]) {
+			res.push(this[i]);
+			hash[this[i]] = true;
+		}
+	}
+	return res;
+}
+*/
+// 针对第一个问题可以做出改进：
+// 但是Object的问题还在
+// 如果数组元素全部都是基础类型的Number值，哈希法的效率是最高的。
+/*Array.prototype.uniq = function(){
+	var hash = {};
+	var res = [];
+
+	for (var i = 0; i < this.length; i++) {
+		var item = this[i];
+
+		var key = typeof item + item;
+		if (!hash[key]) {
+			res.push(item);
+			hash[key] = true;
+		}
+	}
+	return res;
+}
+*/
+
+
+// 四、ES6
+//1、Set
+// Array.prototype.uniq = function(){
+// 	return Array.from(new Set(this));
+// }
+//2、数组实例的includes方法，没有NaN的烦恼
+Array.prototype.uniq = function(){
+	var result = [];
+	for (i in this) {
+		if (this.hasOwnProperty(i)) {
+			if (!result.includes(this[i])) {
+				result.push(this[i]);
+			}
+		}
+	}
+	return result;
+}
+
+
+// underscore的_.unique
+//调用方式为 _.unique(array, [isSorted], [iteratee])。其中第一个参数是必须的，是需要去重的数组，第二个参数可选，如果数组有序，则可以传入布尔值 true，第三个参数可选，如果需要对数组迭代的结果去重，则可以传入一个迭代函数。
+// 
+
+
+
+console.log([1,2,2,1,5,3,2,6].uniq());
+console.log([false, true, undefined, null, NaN, 0, 1, {}, {},'1', 'a', 'a', NaN].uniq());
+</script>
+</html>

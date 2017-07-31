@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body id="body">
+	<div id="div">
+		<input id="input" type="" name="">
+	</div>
+	<div id="div2">
+		<p id="p"></p>
+		<span id="span">
+			<font id="font"></font>
+			<a href="" id="a"></a>
+		</span>
+	</div>
+</body>
+<script type="text/javascript">
+
+
+function commonParentNode(oNode1, oNode2) {
+     if (oNode1.contains(oNode2)) {
+         return oNode1;
+     } else if (oNode2.contains(oNode1)) {
+         return oNode2;
+     } else {
+         return commonParentNode(oNode1.parentNode, oNode2.parentNode);
+     }
+  }
+
+	console.log(commonParentNode(document.getElementById('font'),document.getElementById('input')));
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	function rgb2hex(sRGB){
+		function trim(str){
+			if (trim()) {
+				return trim(str);
+			}
+			else{
+				return str.replace(/^\s+|\s+$/g,'')
+			}
+		}
+		var reg = /rgb\(\d+,\s*\d+,\s*\d+\)/;
+		var flag = true;
+		if (reg.test(sRGB)) {
+			rgb = sRGB.slice(4,sRGB.length - 1).split(',');
+			rgb = rgb.map(function(item){
+				item = parseInt(item).toString(16);
+				if (item.length < 2) {
+					return '0' + item;
+				}
+				else if(item.length == 2){
+					return item;
+				}
+				else{
+					flag = false;
+				}
+			});
+			if (flag) {
+				return '#' + rgb.join('')
+			}
+			else{
+				return sRGB;
+			}
+		}
+		else{
+			return sRGB;
+		}
+	}
+
+	console.log(rgb2hex('rgb(255, 255,255)'));
+
+
+
+//比较简洁，但是没有考虑大于255的情况。
+function rgb2hex(sRGB) {
+   return sRGB.replace(/^rgb\((\d+)\s*\,\s*(\d+)\s*\,\s*(\d+)\)$/g, function(a, r, g, b){
+       return '#' + hex(r) + hex(g) + hex(b);
+   }); 
+}
+function hex(n){
+    return n < 16 ? '0' + (+n).toString(16) : (+n).toString(16);
+}
+</script>
+</html>

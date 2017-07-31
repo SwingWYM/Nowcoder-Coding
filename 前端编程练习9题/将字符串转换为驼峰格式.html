@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	function cssStyle2DomStyle(sName) {
+		return sName.replace(/([a-zA-z0-9]*)\-([a-zA-z0-9])/gy,function(a,b,c){
+			// console.log(a);
+			if (b) {
+				return b + c.toUpperCase();
+			}
+			else{
+				return c;
+			}
+		})
+	}
+
+
+	function y(){
+		return 'aaca'.replace(/a/g,'b')//一个y修饰符replace不起作用
+	}
+//js不支持?<=
+	// function cssStyle2DomStyle(sName) {
+	// 	return sName.replace(/(?<=[a-zA-z0-9]+)\-([a-zA-z0-9])/g,function(a,b){
+	// 		return b.toUpperCase();
+	// 	})
+	// }
+
+	console.log(cssStyle2DomStyle('font-size-border'));//如果-中间某个词只有一个字母就会不起作用，因为g修饰符会每次从上次的匹配成功的下一位开始匹配
+	console.log(cssStyle2DomStyle('-webkit-border-image'));
+
+
+	console.log(y());
+
+	console.log('aaxa'.replace(/a/gy,'b'));
+
+
+</script>
+</html>

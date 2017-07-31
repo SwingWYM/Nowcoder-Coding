@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	function getUrlParam(sUrl,sKey) {
+		var paramString = sUrl.slice(sUrl.indexOf('?') + 1);
+		if (paramString.indexOf('#') >= 0) {
+			paramString = paramString.slice(0, paramString.indexOf('#'))
+		}
+		paramArray = paramString.split('&');
+		paramObject = {};
+		for (var i = 0; i < paramArray.length; i++) {
+			param = paramArray[i].split('=');
+			if (param[0] in paramObject) {
+				if (typeof paramObject[param[0]] == 'string') {
+					paramObject[param[0]] = [paramObject[param[0]],param[1]];
+				}
+				else{
+					paramObject[param[0]].push(param[1])
+				}
+			}
+			else{
+				paramObject[param[0]] = param[1]
+			}
+		}
+		// console.log(paramObject);
+		if (sKey) {
+			return paramObject[sKey] || '';
+		}
+		else{
+			return paramObject;
+		}
+	}
+	console.log(getUrlParam('http://www.nowcoder.com?key=1&key=2&key=3&test=4#hehe', 'key'))
+
+
+
+
+// 正则法
+	function getUrlParam(sUrl,sKey){    
+		var result = {};    
+		sUrl.replace(/\??(\w+)=(\w+)&?/g,function(a,k,v){
+			console.log(a);        
+			if(result[k] !== void 0){            
+				var t = result[k];            
+				result[k] = [].concat(t,v);
+			}
+			else{            
+				result[k] = v;
+			}
+		});    
+		if(sKey === void 0){
+			return result;
+		}
+		else{        
+			return result[sKey] || '';    
+			}
+	}
+	console.log(getUrlParam('http://www.nowcoder.com?key=1&key=2&key=3&test=4#hehe', 'key'))
+</script>
+</html>

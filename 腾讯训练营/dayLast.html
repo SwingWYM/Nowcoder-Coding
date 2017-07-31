@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<button type="button id="start">开始</button>
+<button type="button" id="pause">暂停</button>
+​<button type="button" id="reset">复位</button>
+​<div id="show">0</div>
+​
+</body>
+<script type="text/javascript">
+	var i = 0;
+​var show = document.getElementById('show'),
+​    start = document.getElementById('start'),
+​    pause = document.getElementById('pause'),
+​    reset = document.getElementById('reset');
+​var time;
+​​function addEvent(element,type,handle){
+​    if(element.addEventListener){
+​         element.addEventListener(type,handle,false);
+​    }else if(element.attachEvent){
+​        element.attachEvent('on'+ type,handle);
+​    }else{
+​        element['on' + type] = handle;
+​    }
+​}
+
+​function handler1(){
+​    time = setTimeout(function(){
+​        i = i + 1;
+​        show.innerText = i;
+​        time = setTimeout(arguments.callee,1000);
+​    },1000)
+​}
+​function handler2(){
+​    clearTimeout(time);
+​}
+​function handler3(){
+​    i = 0;
+​    show.innerText = i;
+​    clearTimeout(time);
+}
+​
+​addEvent(start,'click',handler1);
+​addEvent(pause,'click',handler2);
+​addEvent(pause,'click',handler3);
+</script>
+</html>
